@@ -157,32 +157,30 @@ img { max-width: 100%; display: block; }
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-family: 'Playfair Display', serif;
   text-decoration: none;
 }
 
-.logo-leaf { font-size: 1.6rem; }
-
-.logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--white);
+/* Navbar logo image — mix-blend-mode removes the black background on white/light navbars */
+.logo-img {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;   /* black pixels become transparent on light backgrounds */
   transition: var(--transition);
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.12));
 }
 
-.logo-sub {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.75);
-  letter-spacing: 1px;
-  transition: var(--transition);
-  margin-top: 2px;
+/* On hero (dark/transparent navbar), invert to make it show white-on-dark */
+.hero ~ * #navbar .logo-img,
+#navbar:not(.scrolled) .logo-img {
+  mix-blend-mode: screen;     /* removes black on dark backgrounds */
+  filter: brightness(1.15) drop-shadow(0 1px 6px rgba(0,0,0,0.3));
 }
 
-#navbar.scrolled .logo-text { color: var(--green-dark); }
-#navbar.scrolled .logo-sub  { color: var(--text-light); }
+#navbar.scrolled .logo-img {
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.08));
+}
 
 .nav-links {
   display: flex;
@@ -1208,4 +1206,25 @@ img { max-width: 100%; display: block; }
   .crop-grid { grid-template-columns: repeat(3, 1fr); }
   .contact-info-card, .contact-form-card { padding: 28px 20px; }
   .hero-title { font-size: 2.2rem; }
+}
+
+/* ============================================
+   LOGO IMAGE STYLES
+   ============================================ */
+
+/* Footer logo — make white so it's visible on the dark green footer */
+.footer-logo-img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  /* Invert the black logo to white on dark background */
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  margin-bottom: 0.5rem;
+}
+
+/* Mobile logo size */
+@media (max-width: 768px) {
+  .logo-img { height: 40px; }
+  .footer-logo-img { height: 48px; }
 }
